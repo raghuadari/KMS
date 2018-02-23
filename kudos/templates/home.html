@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <div class="container-fluid text-center">
+            <div class="row content">
+                <div class="col-sm-2 sidenav">
+                    <p>Hi {{ user }}!
+                    <p>
+                    <p><a href="{% url 'logout' %}">logout</a></p>
+                    <p><a href="#">Link</a></p>
+                </div>
+                <div class="col-sm-8 text-left">
+                    <p>Kudos granted : {{ kudos_granted }}</p>
+                    <p><a href="{% url 'grant' %}">Give Kudos !</a></p>
+                    <p>Kudos received : {{ kudos_received }}</p>
+                </div>
+                <div class="col-sm-2 sidenav">
+                    <p>Leader Board</p>
+                    <div class="well">
+                        <p>Kudo Receivers</p>
+                        <ul>
+                            {% for x in receiver_leaders %}
+                                <li>{{ x.to_user }} - {{ x.dcount }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="well">
+                        <p>Kudo Grantors</p>
+                        <ul>
+                            {% for x in grantor_leaders %}
+                                <li>{{ x.from_user }} - {{ x.dcount }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <p>You are not logged in</p>
+        <a href="{% url 'login' %}">login</a>
+    {% endif %}
+    </div>
+{% endblock %}
