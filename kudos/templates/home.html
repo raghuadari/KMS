@@ -1,39 +1,89 @@
 {% extends 'base.html' %}
+{% load bootstrap3 %}
 
 {% block title %}Home{% endblock %}
 
 {% block content %}
     {% if user.is_authenticated %}
-        <div class="container-fluid text-center">
-            <div class="row content">
-                <div class="col-sm-2 sidenav">
-                    <p>Hi {{ user }}!
-                    <p>
-                    <p><a href="{% url 'logout' %}">logout</a></p>
-                    <p><a href="#">Link</a></p>
-                </div>
-                <div class="col-sm-8 text-left">
-                    <p>Kudos granted : {{ kudos_granted }}</p>
-                    <p><a href="{% url 'grant' %}">Give Kudos !</a></p>
-                    <p>Kudos received : {{ kudos_received }}</p>
-                </div>
-                <div class="col-sm-2 sidenav">
-                    <p>Leader Board</p>
-                    <div class="well">
-                        <p>Kudo Receivers</p>
-                        <ul>
-                            {% for x in receiver_leaders %}
-                                <li>{{ x.to_user }} - {{ x.dcount }}</li>
-                            {% endfor %}
-                        </ul>
+        <div class="container-fluid">
+            <div id="diff" class="row1">
+                <div class="head">
+                    <div class="col-lg-12" text-left>
+                        <h2>Hi {{ user }}! <h4><a href="{% url 'logout' %}">Logout</a></h4></h2>
                     </div>
-                    <div class="well">
-                        <p>Kudo Grantors</p>
-                        <ul>
-                            {% for x in grantor_leaders %}
-                                <li>{{ x.from_user }} - {{ x.dcount }}</li>
+                </div>
+            </div>
+            <div class="row" text-center>
+                <div class="col-lg-4" id="col1">
+                    <div class="row">
+                        <h2 id="header">Your Kudos!</h2>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="stats">{{ kudos_received }}</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="stats"> <h4>Kudos Received</h4></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class=" col-lg-12">
+                            <div class="stats">{{ kudos_granted }}</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="stats"><h4>Kudos Granted</h4></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4" id="col2">
+                    <div class="row">
+                        <h2>Award Kudos!</h2>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-10 text-left">
+                            <form role="form" method="post">
+                                {% csrf_token %}
+                                {% bootstrap_form form %}
+                                {% buttons submit='Submit' reset='Reset' %}{% endbuttons %}
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4" text-center id="col3">
+                    <div class="row"><h2>Kudos Leaders!</h2></div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h4>Kudo Receivers</h4>
+                            {% for x in receiver_leaders %}
+                                <div class="row">
+                                    <div class="col-lg-6 text-left">
+                                        {{ x.to_user }}
+                                    </div>
+                                    <div class="col-lg-6 text-left">
+                                        {{ x.dcount }}
+                                    </div>
+                                </div>
                             {% endfor %}
-                        </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h4>Kudo Grantors</h4>
+                            {% for x in grantor_leaders %}
+                                <div class="row">
+                                    <div class="col-lg-6 text-left">
+                                        {{ x.from_user }}
+                                    </div>
+                                    <div class="col-lg-6 text-left">
+                                        {{ x.dcount }}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
                     </div>
 
                 </div>

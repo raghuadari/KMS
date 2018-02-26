@@ -130,4 +130,4 @@ AUTH_USER_MODEL = 'kudos.User'
 
 LOGIN_REDIRECT_URL = 'home'
 
-LOGOUT_REDIRECT_URL = 'root'
+LOGOUT_REDIRECT_URL = 'login'
