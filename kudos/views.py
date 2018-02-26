@@ -11,7 +11,7 @@ from .forms import KudoForm
 def home(request):
     current_user = request.user
     if request.method == "POST":
-        form = KudoForm(request.POST,current_user)
+        form = KudoForm(current_user, request.POST)
         if form.is_valid():
             # commit=False means the form doesn't save at this time.
             # commit defaults to True which means it normally saves.

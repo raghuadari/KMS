@@ -11,7 +11,7 @@ class KudoForm(ModelForm):
         self.fields['description'].required = True
         self.fields['to_user'].label = "To"
         self.fields['title'].label = "Kudo Title"
-        self.fields['to_user'].queryset = User.objects.filter(~User(email=user.email))
+        self.fields['to_user'].queryset = User.objects.exclude(email=user.email)
     class Meta:
         model = Kudo
         fields = ['to_user', 'title', 'description']
